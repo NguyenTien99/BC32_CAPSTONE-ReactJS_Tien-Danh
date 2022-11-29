@@ -13,6 +13,14 @@ const theaterAPI = {
         })
     },
 
+    getTheaterSchedule : () => {
+        return fetcher.get("QuanLyRap/LayThongTinLichChieuHeThongRap", {
+            params: {
+                maNhom: "GP06",
+            }
+        })
+    },
+
     getMovieSchedule : (maPhim) => {
         return fetcher.get("QuanLyRap/LayThongTinLichChieuPhim", {
             params: {
@@ -20,6 +28,7 @@ const theaterAPI = {
             }
         })
     }
+
 
     
 }

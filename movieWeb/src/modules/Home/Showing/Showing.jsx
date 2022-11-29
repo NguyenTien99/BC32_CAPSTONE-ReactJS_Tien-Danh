@@ -31,8 +31,9 @@ const Showing = () => {
   }, []);
 
   return (
-    <div className={styles.showing}>
+    <div className={styles.wrapShowing} id="Showing">
       <div className="container">
+        <div className={styles.showing}>
         <MovieItem currentItems={currentItems} />
         <ReactPaginate
           breakLabel="..."
@@ -48,6 +49,7 @@ const Showing = () => {
           nextLinkClassName={styles.page__num}
           activeLinkClassName={styles.paginate__active}
         />
+        </div>
       </div>
     </div>
   );

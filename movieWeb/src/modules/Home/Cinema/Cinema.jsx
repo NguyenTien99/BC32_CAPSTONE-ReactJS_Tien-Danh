@@ -48,7 +48,7 @@ const Cinema = () => {
   if (!maRap) return;
 
   return (
-    <div className="py-5">
+    <div className="py-5" id="Cinema">
       <div className="container">
         <div>
           <Tabs defaultValue={maRap} orientation="vertical">

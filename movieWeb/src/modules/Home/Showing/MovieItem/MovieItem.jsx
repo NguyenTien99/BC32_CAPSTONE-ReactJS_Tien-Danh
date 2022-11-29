@@ -10,6 +10,7 @@ const MovieItem = ({ currentItems }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
+  // console.log(window.innerWidth)
 
   return (
     <div className="row">
@@ -37,8 +38,10 @@ const MovieItem = ({ currentItems }) => {
                   variant="gradient"
                   gradient={{ from: "orange", to: "red" }}
                   radius="md"
-                  size="lg"
+                  // size={window.innerWidth <= 600 ? "md" : "lg"}
+                  // size="lg"
                   onClick={() => navigate(`/movie/${item.maPhim}`)}
+                  classNames={{root : styles.btnMovieItem}}
                 >
                   Chi Tiết
                 </Button>

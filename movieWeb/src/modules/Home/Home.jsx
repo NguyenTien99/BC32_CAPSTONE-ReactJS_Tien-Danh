@@ -4,19 +4,22 @@ import Banner from "./Banner";
 import Intro from "./Intro/Intro";
 import Showing from "./Showing";
 import styles from "./home.module.scss";
-import Cinema from "./Cinema/Cinema";
+import Theaters from "./Theaters/Theaters";
+// import Cinema from "./Cinema/Cinema";
 
 const Home = () => {
 
   return (
-    <div>
+    <div className={styles.wrapHome}>
       <Intro />
 
       <Banner />
 
       <Showing />
 
-      <Cinema />
+      {/* <Cinema /> */}
+
+      <Theaters />
     </div>
   );
 };

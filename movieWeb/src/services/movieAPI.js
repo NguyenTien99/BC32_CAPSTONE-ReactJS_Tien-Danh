@@ -17,7 +17,7 @@ const movieAPI = {
         return fetcher.get("QuanLyPhim/LayThongTinPhim",{
             params: {
                 maPhim: movieId,
-            }
+            },
         })
     },
 

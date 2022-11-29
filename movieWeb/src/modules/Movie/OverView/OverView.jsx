@@ -4,8 +4,6 @@ import { Button } from "@mantine/core";
 import { openModal } from "../../../slices/modalMovie";
 import { useDispatch } from "react-redux";
 import cn from "classnames";
-import { Link } from "react-router-dom";
-import ShowTime from "../ShowTime/ShowTime";
 
 const OverView = ({ movie }) => {
   const dispatch = useDispatch();

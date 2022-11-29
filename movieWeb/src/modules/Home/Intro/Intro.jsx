@@ -16,33 +16,20 @@ const Intro = () => {
         height="100%"
         volume={1}
         muted={isMuted}
-        // url="https://vimeo.com/265260715"
-        url="https://vimeo.com/273686020"
+        url="https://vimeo.com/265260715"
         // url="https://www.youtube.com/watch?v=xVMkyDSqlH4"
 
         className={styles.videoIntro}
       />
 
       <div className={styles.infoIntro}>
-        <h1 className={styles.headingIntro}>BC32 Movie</h1>
-        <p className={styles.contentIntro}>
-          Trailer for movie series "New Movies"
+        <h1 className={styles.headingIntro}>
+          Welcome to
           <br />
-           Production: Fox Devil Films GmbH
-          for Netflix 
-          Amsterdam 
+          BC32 Movie
           <br />
-          Director: Simon Ritzler 
-          <br />
-          Dop: Carlo Jelavic
-          <br />
-          Editor: Michael Timmers 
-          <br />
-          Colorist: Mike Bothe 
-          <br />
-          Compositing: Stathis
-          Nafpliotis
-        </p>
+          Tiến & Danh
+        </h1>
       </div>
       {isMuted ? (
         <VscMute
