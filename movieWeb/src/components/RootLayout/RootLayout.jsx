@@ -1,24 +1,23 @@
-import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Outlet } from 'react-router-dom';
-import Header from '../Header';
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Outlet } from "react-router-dom";
+import Header from "../Header";
 import ReactPlayer from "react-player";
-import { onCloseModal } from '../../slices/modalMovie';
+import { onCloseModal } from "../../slices/modalMovie";
 import { Modal } from "@mantine/core";
-import styles from "./rootLayout.module.scss"
-
+import styles from "./rootLayout.module.scss";
 
 const RootLayout = () => {
   const { isOpen, movie } = useSelector((state) => state.modalMovie);
   const dispatch = useDispatch();
-  
+
   return (
-    <div>
-        <Header />
+    <div >
+      <Header />
 
-        <Outlet />
+      <Outlet />
 
-        <Modal
+      <Modal
         opened={isOpen}
         onClose={() => dispatch(onCloseModal())}
         withCloseButton={false}
@@ -26,9 +25,7 @@ const RootLayout = () => {
         size="75%"
         centered={true}
       >
-        <div 
-        className={styles.playerWrap}
-        >
+        <div className={styles.playerWrap} style={{paddingTop:"50%"}}>
           <ReactPlayer
             width="100%"
             height="100%"

@@ -1,30 +1,82 @@
-import React from 'react';
-import { Link } from 'react-router-dom'
-import styles from './Header.module.scss';
-import cn from "classnames";
-// import useScrollY from '../hooks/useScrollY';
+import React from "react";
+import { Link } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import useScrollY from "../hooks/useScrollY";
+import {  NavLink } from "@mantine/core";
+import { MdAccountCircle } from "react-icons/md";
+import styles from "./Header.module.scss";
+import { logout } from "../../slices/authSlice";
 
 const Header = () => {
-  // const { scrollY } = useScrollY();
+  const { scrollY } = useScrollY();
+
+  const { user } = useSelector((state) => state.authSlice);
+  const dispatch = useDispatch();
+
   return (
-    // <div className={cn(styles.header,{"bg-black": scrollY})}>
-    <div className={styles.header}>
-      <div className={cn("container",styles.header__content)}>
-        <Link to="/" className={styles.title}>Movie</Link>
-        <nav>
+    <div className={styles.wrapHeader}>
+      <div className={styles.header}>
+        <div className={styles.title}>
+          <Link to="/">Movie</Link>
+        </div>
+        <nav className={scrollY ? styles.navMovieScroll : styles.navMovie}>
           <ul>
             <li>
-              Lịch chiếu
+              <Link to="/">Trang chủ</Link>
             </li>
             <li>
-            Cụm rạp
+              <a href="/#Showing">Danh sách phim</a>
             </li>
             <li>
-            Tin tức
+              <a href="/#Cinema">Cụm rạp chiếu</a>
             </li>
           </ul>
         </nav>
-        <div></div>
+
+        <div className={styles.auth}>
+          {user 
+          ? (
+            // <Box sx={{ width: "100%" }}>
+            <div>
+              <NavLink
+              label={user.hoTen}
+              icon={<MdAccountCircle size={25} color="success" className=""/>}
+              childrenOffset={50}
+              classNames={{
+                root: styles.navAccount,
+                icon: styles.iconAccount,
+                label: styles.labelAcount, 
+              }}
+              >
+                <NavLink 
+                label={<p>Thoát tài khoản</p>} 
+                classNames={{
+                  root: styles.navChildren,
+                  label: styles.labelChildren,
+                }}
+                onClick={() => dispatch(logout())} 
+                />
+              </NavLink>
+            </div>
+            // </Box>
+          ) 
+          : (
+          <div>
+            <Link to="/signIn">Đăng nhập</Link>
+            <span>|</span>
+            <Link to="/signUp">Đăng kí</Link>
+          </div>
+          )
+          }
+          {/* <div>
+            <Link to="/signIn">Đăng nhập</Link>
+            <span>|</span>
+            <Link to="/signUp">Đăng kí</Link>
+          </div> */}
+          <div>
+
+          </div>
+        </div>
       </div>
     </div>
   );

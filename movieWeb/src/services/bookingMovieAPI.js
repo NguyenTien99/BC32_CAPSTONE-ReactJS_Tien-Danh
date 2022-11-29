@@ -7,7 +7,11 @@ const bookingMovieAPI = {
                 MaLichChieu: maLichChieu,
             }
         })
-    }
+    },
+
+    postBookingTicket : (DanhSachVe) => {
+        return fetcher.post("QuanLyDatVe/DatVe", DanhSachVe)
+    }   
 }
 
 export default bookingMovieAPI;
