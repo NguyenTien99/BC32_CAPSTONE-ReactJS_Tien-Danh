@@ -21,11 +21,6 @@ const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    logout: (state, action) => {
-      localStorage.removeItem("user");
-      return { ...state, user: null };
-    },
-
     signIn: (state, action) => {
       authAPI.signUp(action.payload);
     },
