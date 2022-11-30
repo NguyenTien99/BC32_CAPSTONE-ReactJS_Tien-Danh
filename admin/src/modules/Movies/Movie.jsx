@@ -3,37 +3,51 @@ import { Table } from "@mantine/core";
 import movieAPI from "../../services/movieAPI";
 import { FaPenFancy } from "react-icons/fa";
 import { AiFillDelete } from "react-icons/ai";
-import styles from "./Movie.module.scss";
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import styles from "./Movie.module.scss";
+import { changeModalEditMovie } from "../../slices/modalSlice";
 
 const Movie = () => {
   const [movies, setMovies] = useState([]);
+  const dispatch = useDispatch();
+
+  const getMoviesAPI = async () => {
+    try {
+      const data = await movieAPI.getMovies();
+      setMovies(data);
+      // console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   useEffect(() => {
-    (async () => {
-      try {
-        const data = await movieAPI.getMovies();
-        setMovies(data);
-        // console.log(data);
-      } catch (error) {
-        console.log(error);
-      }
-    })();
+    getMoviesAPI();
   }, []);
 
   const handleDelete = async (maPhim) => {
-    await movieAPI.deleteMovies(maPhim);
-    // console.log("delete");
+    try {
+      await movieAPI.deleteMovies(maPhim);
+      getMoviesAPI();
+    } catch (error) {
+      console.log(error);
+    }
   };
 
-  const handleEdit = () => {
-    console.log("click edit");
+  const handleEdit = async (id) => {
+    try {
+      const data = await movieAPI.getInfoMoviesById(id);
+      dispatch(changeModalEditMovie());
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
     <div>
       <h1>Quản lí Phim</h1>
-      <Link to="/movieEdit">
+      <Link to="/movieAdd">
         <button>Thêm Phim</button>
       </Link>
 
@@ -61,7 +75,10 @@ const Movie = () => {
               </td>
               <td>{item.tenPhim}</td>
               <td>{item.moTa}</td>
-              <button className={styles.edit} onClick={() => handleEdit()}>
+              <button
+                className={styles.edit}
+                onClick={() => handleEdit(item.maPhim)}
+              >
                 <FaPenFancy />
               </button>
               <button
