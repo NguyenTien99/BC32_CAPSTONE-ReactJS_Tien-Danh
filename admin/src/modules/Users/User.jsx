@@ -4,32 +4,48 @@ import movieAPI from "../../services/movieAPI";
 import { Table } from "@mantine/core";
 import { FaPenFancy } from "react-icons/fa";
 import { AiFillDelete } from "react-icons/ai";
+import { useDispatch } from "react-redux";
+import { changModalUser } from "../../slices/modalSlice";
 
 const User = () => {
   const [user, setUser] = useState([]);
+  const dispatch = useDispatch();
+
+  const getUsersAPI = async () => {
+    try {
+      const data = await movieAPI.getUsers();
+      setUser(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   useEffect(() => {
-    (async () => {
-      try {
-        const data = await movieAPI.getUsers();
-        setUser(data);
-        console.log(data);
-      } catch (error) {
-        console.log(error);
-      }
-    })();
+    getUsersAPI();
   }, []);
 
   const handleDelete = async (id) => {
-    // await movieAPI.deleteUsers(id)
-    console.log(id);
+    try {
+      await movieAPI.deleteUsers(id);
+      getUsersAPI();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleEdit = async (id) => {
+    try {
+      await movieAPI.getUsers(id);
+      dispatch(changModalUser());
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
     <div>
       <div>
         <h1>Quản lí Người Dùng</h1>
-        <a href="/">Đăng Nhập</a>
       </div>
 
       <Table>
@@ -52,7 +68,10 @@ const User = () => {
               <td>{item.matKhau}</td>
               <td>{item.soDT}</td>
               <td>{item.taiKhoan}</td>
-              <button className={styles.edit}>
+              <button
+                className={styles.edit}
+                onClick={() => handleEdit(item.taiKhoan)}
+              >
                 <FaPenFancy />
               </button>
               <button

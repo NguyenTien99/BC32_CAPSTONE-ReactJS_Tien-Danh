@@ -25,6 +25,14 @@ const movieAPI = {
     });
   },
 
+  getInfoMoviesById: (id) => {
+    return fetcher.get("QuanLyPhim/LayThongTinPhim", {
+      params: {
+        MaPhim: id,
+      },
+    });
+  },
+
   getUsers: () => {
     return fetcher.get("QuanLyNguoiDung/LayDanhSachNguoiDung", {
       params: {
