@@ -21,9 +21,15 @@ const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    signIn: (state, action) => {
-      authAPI.signUp(action.payload);
-    },
+    // signIn: (state, action) => {
+    //   authAPI.signUp(action.payload);
+    // },
+
+    logout: (state,action) => {
+      localStorage.removeItem("user");
+      return{ ...state, user: null}
+    }
+
   },
   extraReducers: (builder) => {
     builder.addCase(signIn.pending, (state, action) => {

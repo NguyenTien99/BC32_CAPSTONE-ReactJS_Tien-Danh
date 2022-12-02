@@ -1,12 +1,15 @@
 .control {
-  background-color: rgb(7, 7, 63);
+  background-color: rgb(246, 245, 245);
   min-height: 100vh;
+  border-right: 3px solid black;
   width: 100%;
-}
-
-a {
-  color: yellowgreen;
-  &:hover {
-    background-color: white;
+  color: #fff;
+  font-size: 25px;
+  a {
+    color: #fff;
+    &:hover {
+      background-color: white;
+    }
   }
 }
+

@@ -4,6 +4,7 @@ import RootLayout from "../components/RootLayout";
 import ErrorBoundary from "../components/ErrorBoundary";
 import UserProtected from "./UserProtected";
 import NotFound from "../components/NotFound";
+import Loading from "../components/Loading";
 
 // import Home from "../modules/Home";
 // import Movie from "../modules/Movie";
@@ -39,7 +40,7 @@ const routes = createBrowserRouter([
     ]},
     ],
   },
-
+  {path: "/loading",element: <Loading />},
   { path: "*", element: <NotFound /> },
 ]);
 

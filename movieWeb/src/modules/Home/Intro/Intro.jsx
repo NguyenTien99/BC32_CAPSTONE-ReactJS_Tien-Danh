@@ -17,8 +17,6 @@ const Intro = () => {
         volume={1}
         muted={isMuted}
         url="https://vimeo.com/265260715"
-        // url="https://www.youtube.com/watch?v=xVMkyDSqlH4"
-
         className={styles.videoIntro}
       />
 

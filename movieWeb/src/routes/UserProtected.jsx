@@ -7,8 +7,6 @@ const UserProtected = ({children}) => {
 
   //useLocation trả về một object chưa thông tin URL hiện tại 
   const location = useLocation();
-  console.log(location)
-
 
   if(!user){
     const url = `/signIn?redirectURL=${location.pathname}`

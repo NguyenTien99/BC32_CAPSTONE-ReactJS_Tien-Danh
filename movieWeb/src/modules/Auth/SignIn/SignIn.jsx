@@ -5,15 +5,16 @@ import { Navigate, useSearchParams } from "react-router-dom";
 import { MdAccountCircle } from "react-icons/md";
 import { Link } from "react-router-dom";
 import { Checkbox} from "@mantine/core";
-import styles from "./SignIn.module.scss";
 import { signIn } from "../../../slices/authSlice";
+import swal from 'sweetalert';
+import styles from "./SignIn.module.scss";
 
 const SignIn = () => {
   const { user, loading, error } = useSelector((state) => state.authSlice);
   const dispatch = useDispatch();
 
   const [searchParams, setSearchParam] = useSearchParams();
-  console.log(searchParams.get("redirectURL"));
+
 
   const { register, handleSubmit, formState } = useForm({
     defaultValues: { taiKhoan: "", matKhau: "" },
@@ -22,19 +23,12 @@ const SignIn = () => {
 
   const onSubmit = (value) => {
     dispatch(signIn(value));
-
-    // return (
-    // <Alert icon={<BsCheckCircleFill size={16} />} title="Bummer!" color="lime">
-    //   Something terrible happened! You made a mistake and there is no going back, your data was lost forever!
-    // </Alert>
-    // );
-
-    // alert("Đăng nhập thành công");
   };
-
+  
   const { errors } = formState;
-
+  
   if (user) {
+    swal("Đăng nhập thành công", "" , "success" );
     const redirectUrl = searchParams.get("redirectURL");
     return <Navigate to={redirectUrl || "/"} replace />;
   }

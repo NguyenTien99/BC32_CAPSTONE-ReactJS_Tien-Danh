@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { Navigate } from 'react-router-dom';
 import { AiOutlineUsergroupAdd } from "react-icons/ai";
 import { Link } from "react-router-dom";
+import swal from 'sweetalert';
 import authAPI from "../../../services/authAPI";
 
 import styles from "./SignUp.module.scss";
@@ -29,10 +30,10 @@ const SignUp = () => {
     try {
       await authAPI.signUp(payload);
       seSuccessRegister(true);
-      alert("Đăng kí thành công");
+      swal("Đăng kí thành công", "", "success");
 
     } catch (error) {
-      alert("Đăng kí thất lại");
+      swal("Đăng kí thất bại", "", "error");
       console.log(error)
     }
   };
