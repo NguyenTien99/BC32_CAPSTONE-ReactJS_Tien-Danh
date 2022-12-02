@@ -1,0 +1,25 @@
+.wrapAccess{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    text-align: center;
+    font-size: 40px;
+    // background-color: rgb(180, 215, 229);
+    background-image: url("../../../public/img/anh-bau-troi-xanh-va-mat-nuoc.jpg");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    .Access{
+        padding: 100px;
+        border: 3px solid black;
+        border-radius: 30px;
+        background-color: #fff;
+        text-shadow: 1px 1px 4px gray;
+        button{
+            padding: 40px 30px;
+            font-size: 25px;
+            border-radius: 50%;
+        }
+    }
+}

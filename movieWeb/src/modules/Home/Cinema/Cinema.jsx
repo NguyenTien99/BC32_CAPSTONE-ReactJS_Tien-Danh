@@ -2,103 +2,117 @@ import React, { useState, useEffect } from "react";
 import { Tabs } from "@mantine/core";
 import theaterAPI from "../../../services/theaterAPI";
 
+import styles from './Cinema.module.scss';
+
+
 
 const Cinema = () => {
-  const [theaterSystem, setTheaterSystem] = useState([]);
-  const [detailTheater, setDetailTheater] = useState([]);
-  const [maRap, setMaRap] = useState(null);
+  const [theaters, setTheater] = useState([]);
+  const [indexTheater, setIndexTheater] = useState(0);
+  const [indexDetailTheater, setIndexDetailTheater] = useState(0);
 
   useEffect(() => {
     (async () => {
       try {
-        const dataTheater = await theaterAPI.getTheaterSystem();
-        setTheaterSystem(dataTheater);
-        setMaRap(dataTheater[0].maHeThongRap);
-
-        // gọi API Thông tin cụm rạp
-        (async () => {
-          try {
-            const dataPerTheater = await theaterAPI.getDetailTheater(
-              dataTheater[0].maHeThongRap
-            );
-            setDetailTheater(dataPerTheater);
-          } catch (error) {
-            console.log(error);
-          }
-        })();
+        const data = await theaterAPI.getTheaterSchedule();
+        setTheater(data);
       } catch (error) {
         console.log(error);
       }
     })();
+    console.log("useEffect-Re");
   }, []);
 
-  const selectedTheater = (maHeThongRap) => {
-    (async () => {
-      try {
-        const data = await theaterAPI.getDetailTheater(maHeThongRap);
-        setDetailTheater(data);
-        setMaRap(maHeThongRap);
-      } catch (error) {
-        console.log(error);
-      }
-    })();
+  const selectedTheater = (index) => {
+    setIndexTheater(index);
+    setIndexDetailTheater(0);
   };
 
+  const selectedDetailTheater = (index) => {
+    setIndexDetailTheater(index);
+  };
 
-  if (!maRap) return;
-
+  if (theaters.length === 0) return;
   return (
-    <div className="py-5" id="Cinema">
-      <div className="container">
-        <div>
-          <Tabs defaultValue={maRap} orientation="vertical">
-            <Tabs.List>
-              {theaterSystem.map((theater) => (
+    <div className={styles.wrapTheater}>
+      <div className="container text-light">
+        <div className={styles.theaters} >
+          <Tabs defaultValue={theaters[indexTheater].maHeThongRap}>
+            <Tabs.List position="center">
+              {theaters.map((item, index) => (
                 <Tabs.Tab
-                  value={theater.maHeThongRap}
-                  key={theater.maHeThongRap}
-                  onClick={() => selectedTheater(theater.maHeThongRap)}
+                  sx={{ color: "red"}}
+                  value={item.maHeThongRap}
+                  key={item.maHeThongRap}
+                  onClick={() => selectedTheater(index)}
                 >
                   <img
-                    src={theater.logo}
-                    alt={theater.tenHeThongRap}
-                    width="50px"
-                    height="50px"
+                    src={item.logo}
+                    alt={item.tenHeThongRap}
+                    width="60px"
+                    height="60px"
                   />
                 </Tabs.Tab>
               ))}
             </Tabs.List>
 
-            <Tabs.Panel value={maRap} >
-              {detailTheater.map((item) => (
-                <p key={item.tenCumRap}>{item.tenCumRap}</p>
-              ))}
-            </Tabs.Panel>
-          </Tabs>
-
-
-
-          {/* <Tabs defaultValue="gallery" orientation="vertical">
-            <Tabs.List>
-              <Tabs.Tab value="gallery">Gallery</Tabs.Tab>
-              <Tabs.Tab value="messages">Messages</Tabs.Tab>
-              <Tabs.Tab value="settings">Settings</Tabs.Tab>
-            </Tabs.List>
-
-            <Tabs.Panel value="gallery">
-              <Tabs  defaultValue="first" orientation="vertical">
+            <Tabs.Panel value={theaters[indexTheater].maHeThongRap} pt="xs">
+              <Tabs
+                defaultValue={
+                  theaters[indexTheater].lstCumRap[indexDetailTheater].maCumRap
+                }
+                orientation="vertical"
+                classNames={
+                  {
+                    // root: styles.tabsDetailTheater,
+                    // tabsList: styles.tabsListDetailTheater,
+                  }
+                }
+              >
                 <Tabs.List>
-                  <Tabs.Tab value="first">First tab</Tabs.Tab>
-                  <Tabs.Tab value="second">Second tab</Tabs.Tab>
+                  {theaters[indexTheater].lstCumRap.map((item, index) => (
+                    <Tabs.Tab
+                      value={item.maCumRap}
+                      key={item.maCumRap}
+                      onClick={() => selectedDetailTheater(index)}
+                    >
+                      <div className={styles.detailTheater} >
+                        <h6>{item.tenCumRap}</h6>
+                        <p>{item.diaChi}</p>
+                      </div>
+                    </Tabs.Tab>
+                  ))}
                 </Tabs.List>
 
-                <Tabs.Panel value="first">First panel</Tabs.Panel>
-                <Tabs.Panel value="second">Second panel</Tabs.Panel>
+                <Tabs.Panel
+                  value={
+                    theaters[indexTheater].lstCumRap[indexDetailTheater]
+                      .maCumRap
+                  }
+                >
+                  {theaters[indexTheater].lstCumRap[
+                    indexDetailTheater
+                  ].danhSachPhim.map((item, index) => (
+                    <div className={styles.movieTheater}>
+                      <div className="row">
+                        <div className="col-4">
+                          <img src={item.hinhAnh} alt={item.tenPhim} />
+                        </div>
+                        <div className="col-8">
+                          <h6 key={item.maPhim}>{item.tenPhim}</h6>
+                          <div className="row">
+                            {item.lstLichChieuTheoPhim.map((i) => (
+                              <div className="col">{i.ngayChieuGioChieu}</div>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </Tabs.Panel>
               </Tabs>
             </Tabs.Panel>
-            <Tabs.Panel value="messages">Messages tab content</Tabs.Panel>
-            <Tabs.Panel value="settings">Settings tab content</Tabs.Panel>
-          </Tabs> */}
+          </Tabs>
         </div>
       </div>
     </div>

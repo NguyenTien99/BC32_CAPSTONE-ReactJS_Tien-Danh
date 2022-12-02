@@ -1,19 +1,24 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useSelector,useDispatch } from "react-redux";
 import { Navigate } from "react-router-dom";
+import { logout } from "../slices/authSlice";
+import swal from "sweetalert";
+
 
 const AdminProtected = ({ children }) => {
   const { user } = useSelector((state) => state.authSlice);
-  console.log(user);
+  const dispatch = useDispatch();
 
   if (!user) {
-    return <Navigate to="/signin" replace />;
+    return <Navigate to="/logIn" replace />;
   }
 
   if (user.maLoaiNguoiDung !== "QuanTri") {
-    alert("thất bại");
+    swal("Tài khoản phải là quản trị","", "error")
+    dispatch(logout());
     return;
   }
+
   return children;
 };
 

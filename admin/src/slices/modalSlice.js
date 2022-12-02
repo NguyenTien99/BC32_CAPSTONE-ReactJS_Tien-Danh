@@ -18,7 +18,6 @@ const modalSlice = createSlice({
   },
 });
 
-export const { changeModalEditMovie } = modalSlice.actions;
-export const { changModalUser } = modalSlice.actions;
+export const { changeModalEditMovie, changModalUser } = modalSlice.actions;
 
 export default modalSlice.reducer;

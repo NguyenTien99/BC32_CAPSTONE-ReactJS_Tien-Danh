@@ -25,10 +25,10 @@ const Header = () => {
               <Link to="/">Trang chủ</Link>
             </li>
             <li>
-              <a href="/#Showing">Danh sách phim</a>
+              <a href="#Showing">Danh sách phim</a>
             </li>
             <li>
-              <a href="/#Cinema">Cụm rạp chiếu</a>
+              <a href="#theaters">Cụm rạp chiếu</a>
             </li>
           </ul>
         </nav>

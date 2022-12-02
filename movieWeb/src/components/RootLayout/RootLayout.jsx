@@ -6,13 +6,14 @@ import ReactPlayer from "react-player";
 import { onCloseModal } from "../../slices/modalMovie";
 import { Modal } from "@mantine/core";
 import styles from "./rootLayout.module.scss";
+import Footer from "../Footer/Footer";
 
 const RootLayout = () => {
   const { isOpen, movie } = useSelector((state) => state.modalMovie);
   const dispatch = useDispatch();
 
   return (
-    <div >
+    <div className={styles.wrapRoot}>
       <Header />
 
       <Outlet />
@@ -34,6 +35,8 @@ const RootLayout = () => {
           />
         </div>
       </Modal>
+
+      <Footer />
     </div>
   );
 };

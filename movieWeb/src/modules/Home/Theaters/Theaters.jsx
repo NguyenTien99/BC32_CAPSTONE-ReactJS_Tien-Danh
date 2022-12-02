@@ -1,12 +1,17 @@
 import React, { useEffect, useState } from "react";
 import theaterAPI from "../../../services/theaterAPI";
-import { Tabs } from "@mantine/core";
+import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
+import "react-tabs/style/react-tabs.css";
+import { useNavigate } from "react-router-dom";
+import { ScrollArea } from '@mantine/core';
+import cn from "classnames";
 import styles from "./Theaters.module.scss";
 
 const Theaters = () => {
   const [theaters, setTheater] = useState([]);
   const [indexTheater, setIndexTheater] = useState(0);
-  const [indexDetailTheater, setIndexDetailTheater] = useState(0);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     (async () => {
@@ -17,107 +22,106 @@ const Theaters = () => {
         console.log(error);
       }
     })();
-    console.log("useEffect-Re");
   }, []);
 
   const selectedTheater = (index) => {
     setIndexTheater(index);
-    setIndexDetailTheater(0);
-  };
-
-  const selectedDetailTheater = (index) => {
-    setIndexDetailTheater(index);
   };
 
   if (theaters.length === 0) return;
 
-  console.log(theaters[2].lstCumRap[0]);
   return (
-    <div className={styles.wrapTheater}>
-      <div className="container">
-        <div className={styles.theaters} height="500px">
-          <Tabs defaultValue={theaters[indexTheater].maHeThongRap}>
-            <Tabs.List>
+    <div className={styles.wrapTheaters} id="theaters">
+      <div className={styles.containerTheater}>
+        <div className={styles.Theaters}>
+          <Tabs>
+            {/* LOGO */}
+            <TabList className={styles.allLogoTheaters}>
               {theaters.map((item, index) => (
-                <Tabs.Tab
+                <Tab
+                  sx={{ color: "red" }}
                   value={item.maHeThongRap}
                   key={item.maHeThongRap}
                   onClick={() => selectedTheater(index)}
+                  className={styles.logoTheater}
                 >
                   <img
                     src={item.logo}
                     alt={item.tenHeThongRap}
-                    width="60px"
-                    height="60px"
+                    width="100%"
+                    height="100%"
                   />
-                </Tabs.Tab>
+                </Tab>
               ))}
-            </Tabs.List>
+            </TabList>
 
-            <Tabs.Panel value={theaters[indexTheater].maHeThongRap} pt="xs">
-              <Tabs
-                defaultValue={
-                  theaters[indexTheater].lstCumRap[indexDetailTheater].maCumRap
-                }
-                orientation="vertical"
-                classNames={
-                  {
-                    // root: styles.tabsDetailTheater,
-                    // tabsList: styles.tabsListDetailTheater,
-                  }
-                }
-                styles={
-                  {
-                    //   root:{background: 'red'},
-                    //   tabsList:{background: 'yellow', },
-                    // tabLabel: {background: 'blue', width:"30%" },
-                    //   tab : {background: 'green', }
-                  }
-                }
-              >
-                <Tabs.List>
-                  {theaters[indexTheater].lstCumRap.map((item, index) => (
-                    <Tabs.Tab
-                      value={item.maCumRap}
-                      key={item.maCumRap}
-                      onClick={() => selectedDetailTheater(index)}
-                    >
-                      <div >
-                        <h6>{item.tenCumRap}</h6>
-                        <p>{item.diaChi}</p>
+                {/* Content detail theater */}
+            <div className={styles.wrapDetailTheater}>
+              {theaters.map((item) => (
+                <TabPanel key={item.maHeThongRap}>
+                  <Tabs>
+                    <div className="row">
+                      <div className="col-12 col-md-4">
+                        <TabList>
+                          {item.lstCumRap.map((i) => (
+                            <Tab key={i.maCumRap}>
+                              <div className={styles.detailTheater}>
+                                <h6>{i.tenCumRap}</h6>
+                                <p>{i.diaChi}</p>
+                              </div>
+                            </Tab>
+                          ))}
+                        </TabList>
                       </div>
-                    </Tabs.Tab>
-                  ))}
-                </Tabs.List>
-
-                <Tabs.Panel
-                  value={
-                    theaters[indexTheater].lstCumRap[indexDetailTheater]
-                      .maCumRap
-                  }
-                >
-                  {theaters[indexTheater].lstCumRap[
-                    indexDetailTheater
-                  ].danhSachPhim.map((item, index) => (
-                    <div className={styles.movieTheater}>
-                      <div className="row">
-                        <div className="col-4">
-                          <img src={item.hinhAnh} alt={item.tenPhim} />
-                        </div>
-                        <div className="col-8">
-                          <h6 key={item.maPhim}>{item.tenPhim}</h6>
-                          <div className="row">
-                            {item.lstLichChieuTheoPhim.map((i) => (
-                              <div className="col">{i.ngayChieuGioChieu}</div>
+                      <div className="col-12 col-md-8">
+                      <ScrollArea style={{ height: 800 }} type="scroll">
+                        <div className={styles.wrapMovie}>
+                        {theaters[indexTheater].lstCumRap.map((item) => (
+                          <TabPanel key={item.maCumRap}>
+                            {item.danhSachPhim.map((i) => (
+                              <div className={styles.listMovie} key={i.maPhim}>
+                                <div className="row">
+                                  <div className=" col-12 col-sm-4 col-lg-3">
+                                    <div className={styles.imgMovie}>
+                                      <img src={i.hinhAnh} alt={i.tenPhim} />
+                                      <h4 >
+                                        {i.tenPhim}
+                                      </h4>
+                                    </div>
+                                  </div>
+                                  <div className="col-12 col-sm-8 col-lg-9">
+                                    <div className="row">
+                                      {i.lstLichChieuTheoPhim.map((a) => (
+                                        <div
+                                          className={cn(
+                                            "col-4 col-lg-3",
+                                            styles.schedule
+                                          )}
+                                          key={a.maLichChieu}
+                                          onClick={() =>
+                                            navigate(
+                                              `bookingMovie/${a.maLichChieu}`
+                                            )
+                                          }
+                                        >
+                                          <p>{a.ngayChieuGioChieu}</p>
+                                        </div>
+                                      ))}
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
                             ))}
-                          </div>
+                          </TabPanel>
+                        ))}
                         </div>
+                      </ScrollArea>
                       </div>
                     </div>
-                  ))}
-                </Tabs.Panel>
-              </Tabs>
-            </Tabs.Panel>
+                  </Tabs>
+                </TabPanel>
+              ))}
+            </div>
           </Tabs>
         </div>
       </div>

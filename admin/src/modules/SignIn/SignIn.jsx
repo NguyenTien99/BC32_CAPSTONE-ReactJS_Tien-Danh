@@ -1,19 +1,14 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
-import { Navigate, useSearchParams } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import { MdAccountCircle } from "react-icons/md";
-import { Link } from "react-router-dom";
-import { Checkbox } from "@mantine/core";
 import styles from "./SignIn.module.scss";
 import { signIn } from "../../slices/authSlice";
 
 const SignIn = () => {
   const { user, loading, error } = useSelector((state) => state.authSlice);
   const dispatch = useDispatch();
-
-  const [searchParams, setSearchParam] = useSearchParams();
-  console.log(searchParams.get("redirectURL"));
 
   const { register, handleSubmit, formState } = useForm({
     defaultValues: { taiKhoan: "", matKhau: "" },
@@ -27,8 +22,7 @@ const SignIn = () => {
   const { errors } = formState;
 
   if (user) {
-    const redirectUrl = searchParams.get("redirectURL");
-    return <Navigate to={redirectUrl || "/"} replace />;
+    return <Navigate to="/admin" replace/>
   }
 
   return (

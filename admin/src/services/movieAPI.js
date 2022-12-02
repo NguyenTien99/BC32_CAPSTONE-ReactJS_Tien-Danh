@@ -9,6 +9,7 @@ const movieAPI = {
     });
   },
 
+
   deleteMovies: (id) => {
     return fetcher.delete("QuanLyPhim/XoaPhim", {
       params: {
@@ -17,12 +18,8 @@ const movieAPI = {
     });
   },
 
-  AddMovies: (movieAPI) => {
-    return fetcher.post("QuanLyPhim/ThemPhimUploadHinh", {
-      params: {
-        maPhim: movieAPI,
-      },
-    });
+  AddMovies: (values) => {
+    return fetcher.post("QuanLyPhim/ThemPhimUploadHinh", values);
   },
 
   getInfoMoviesById: (id) => {
@@ -33,21 +30,21 @@ const movieAPI = {
     });
   },
 
-  getUsers: () => {
-    return fetcher.get("QuanLyNguoiDung/LayDanhSachNguoiDung", {
-      params: {
-        MaNhom: "GP06",
-      },
-    });
+  updateMovie: (values) => {
+    return fetcher.post("QuanLyPhim/CapNhatPhimUpload", values);
   },
 
-  deleteUsers: (id) => {
-    return fetcher.delete("QuanLyNguoiDung/XoaNguoiDung", {
-      params: {
-        TaiKhoan: id,
-      },
-    });
+
+  //Add schedule
+  addScheduleMovie: (values) => {
+    return fetcher.post("QuanLyDatVe/TaoLichChieu", values);
   },
+
+  //Get Lấy mã cụm rạp
+  getDetailTheater : () => {
+    return fetcher.get("QuanLyRap/LayThongTinLichChieuHeThongRap")
+  }
+
 };
 
 export default movieAPI;

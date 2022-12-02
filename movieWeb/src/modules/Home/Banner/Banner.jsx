@@ -35,7 +35,7 @@ const Banner = () => {
         }}
       >
         {banners.map((item) => (
-          <Carousel.Slide key={item.mabanner}>
+          <Carousel.Slide key={item.maPhim}>
             <img
               src={item.hinhAnh}
               alt={item.mabanner}

@@ -1,15 +1,13 @@
-import { Notification, Table } from '@mantine/core';
-import React, { useEffect, useState } from 'react';
+import { Table } from '@mantine/core';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Navigate } from 'react-router-dom';
 import Loading from '../../../components/Loading';
 import bookingMovieAPI from '../../../services/bookingMovieAPI';
 import { calcTotal, reloadBooking } from '../../../slices/bookingMovieSlice';
-import {BsCheckCircleFill} from 'react-icons/bs'
+import swal from 'sweetalert';
 import styles from './InfoBooking.module.scss'
 
 const InfoBooking = ({maLichChieu}) => {
-  const [isPage, setIsPage] = useState(false);
   const {infoMovie, selectedSeat, totalCost} = useSelector(state => state.bookingMovieSlice);
 
   const dispatch = useDispatch();
@@ -33,15 +31,13 @@ const InfoBooking = ({maLichChieu}) => {
       }
 
       if(selectedSeat.length === 0) {
-        alert("Bạn cần chọn ghê");
+        swal ( "Bạn cần chọn ghế" ,  "" ,  "warning" )
         return;
       }
 
       await bookingMovieAPI.postBookingTicket(danhSachVe);
 
-      <Notification icon={<BsCheckCircleFill size={18} />} color="teal" title="Teal notification">
-        This is teal notification with icon
-      </Notification>
+      swal ( "Đặt vé thành công" ,  "" ,  "success" )
 
       dispatch(reloadBooking());
 
