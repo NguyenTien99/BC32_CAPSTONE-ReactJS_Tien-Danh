@@ -1,38 +1,38 @@
 import axios from "axios";
 
 const fetcher = axios.create({
-    baseURL: "https://movienew.cybersoft.edu.vn/api",
-    headers: {
-        Tokencybersoft: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0ZW5Mb3AiOiJCb290Y2FtcCAzMiIsIkhldEhhblN0cmluZyI6IjE1LzA0LzIwMjMiLCJIZXRIYW5UaW1lIjoiMTY4MTUxNjgwMDAwMCIsIm5iZiI6MTY1MzkzMDAwMCwiZXhwIjoxNjgxNjY0NDAwfQ.oR9K8iSTqbo-t0Q_a-WFnKePPaMAr7sdlgR5xKAtQWA"
-
-    }
-})
+  baseURL: "https://movienew.cybersoft.edu.vn/api",
+  headers: {
+    Tokencybersoft:
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0ZW5Mb3AiOiJCb290Y2FtcCA1MDA4IiwiSGV0SGFuU3RyaW5nIjoiMTQvMDEvMjAyNCIsIkhldEhhblRpbWUiOiIxNzA1MTkwNDAwMDAwIiwibmJmIjoxNjc3NDMwODAwLCJleHAiOjE3MDUzMzgwMDB9.8zD74yVmRZkRs7a_zvhCEo9BEb2UlJzsokkHx22VkXg",
+  },
+});
 
 //interceptor
 fetcher.interceptors.response.use(
-    (response) => {
-        return response.data.content
-    },
+  (response) => {
+    return response.data.content;
+  },
 
-    (error) => {
-        return Promise.reject(error.response.data.content)
-    }
-)
+  (error) => {
+    return Promise.reject(error.response.data.content);
+  }
+);
 
 fetcher.interceptors.request.use(
-    (config) => {
-        // thêm authorization vào header config (nếu có)
-        const { accessToken } = JSON.parse(localStorage.getItem("user")) || {};
-        
-        if(accessToken) {
-             config.headers.Authorization = `Bearer ${accessToken}`;
-        }
+  (config) => {
+    // thêm authorization vào header config (nếu có)
+    const { accessToken } = JSON.parse(localStorage.getItem("user")) || {};
 
-        return config;
-    },
-    (error) => {
-        return Promise.reject(error);
+    if (accessToken) {
+      config.headers.Authorization = `Bearer ${accessToken}`;
     }
-)
+
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
 
 export default fetcher;
